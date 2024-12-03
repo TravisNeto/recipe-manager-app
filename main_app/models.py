@@ -47,7 +47,7 @@ class RecipeIngredient(models.Model):
     measurement_unit = models.ForeignKey(MeasurementUnit, on_delete=models.CASCADE, related_name="recipe_ingredients")
 
     def __str__(self):
-        return f"{self.ingredient.name} - {self.measurement_qty.quantity} {self.measurement_unit.name}"
+        return f"{self.measurement_qty.quantity} {self.measurement_unit.name} {self.ingredient.name}"
 
 
 class Step(models.Model):

@@ -1,0 +1,17 @@
+{% extends "main_app/base.html" %}
+{% load static %}
+
+<!-- {% block head %}
+<link rel="stylesheet" href="{% static 'css/recipe-list.css' %}" />
+{% endblock %} -->
+
+{% block content %}
+{% for recipe in recipes %}
+<div>
+  <h2>{{ recipe.title }}</h2>
+  <p><small>{{ recipe.description }}</small></p>
+</div>
+{% empty %}
+<p>No recipes found.</p>
+{% endfor %}
+{% endblock %}

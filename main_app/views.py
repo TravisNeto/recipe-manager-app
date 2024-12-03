@@ -11,8 +11,8 @@ from .models import Recipe
 from django.http import HttpResponse
 
 # Home view - to do
-# class Home(LoginView):
-#     template_name = 'home.html'
+class Home(LoginView):
+    template_name = 'main_app/home.html'
 
 #Sign up
 def signup(request):
@@ -34,21 +34,33 @@ class RecipeCreate(LoginRequiredMixin, CreateView):
     model = Recipe
     fields = ['title', 'description']
     success_url = '/recipes/'
-    #template_name = 'create.html'
+    template_name = 'recipes/recipe_form.html'
+
+    def form_valid(self, form):
+        # Associate the currently logged-in user with the recipe
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 # View all recipes
 class RecipeList(LoginRequiredMixin, ListView):
     model = Recipe
+    template_name = 'recipes/recipe_list.html'
+    context_object_name = 'recipes'
 
 #View individual recipe details
 class RecipeDetail(LoginRequiredMixin, DetailView):
     model = Recipe
+    template_name = 'recipes/recipe_detail.html'
 
+#Update recipes
 class RecipeUpdate(LoginRequiredMixin, UpdateView):
     model = Recipe
     fields = ['title', 'description']
     success_url = '/recipes/'
+    template_name = 'recipes/recipe_form.html'
 
+#Delete recipese
 class RecipeDelete(LoginRequiredMixin, DeleteView):
     model = Recipe
     success_url = '/recipes/'
+    template_name = 'recipes/recipe_confirm_delete.html'

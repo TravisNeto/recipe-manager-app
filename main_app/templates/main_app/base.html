@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe Manager</title>
+  {% block head %}
+  {% endblock %}
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'recipe-list' %}">All Recipes</a></li>
+        <li><a href="{% url 'recipe-create' %}">Create Recipe</a></li>
+        <li>
+          <form id="logout-form" method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+          </form>
+        </li>
+        {% else %}
+        <li><a href="{% url 'home' %}">Login</a></li>
+        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+</body>
+
+</html>
