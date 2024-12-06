@@ -1,0 +1,88 @@
+/* form.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f3f4f6;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin: 2rem 0;
+  }
+  
+  .page-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+  }
+  
+  .header-image {
+    max-width: 120px;
+    margin-top: 1rem;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    text-align: center;
+    font-weight: bold;
+    margin: 1rem 0;
+  }
+  
+  .form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-table {
+    width: 100%;
+    border-spacing: 0.5rem 1rem;
+  }
+  
+  .form-table td {
+    padding: 0.5rem;
+  }
+  
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-submit {
+    background-color: #27ae60;
+  }
+  
+  .btn:hover {
+    background-color: #2980b9;
+  }
+  
+  .btn-submit:hover {
+    background-color: #2ecc71;
+  }
+  
+  .login-link {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  
+  .login-link a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+  
