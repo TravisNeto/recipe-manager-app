@@ -59,8 +59,45 @@ class RecipeUpdate(LoginRequiredMixin, UpdateView):
     success_url = '/recipes/'
     template_name = 'recipes/recipe_form.html'
 
-#Delete recipese
+#Delete recipes
 class RecipeDelete(LoginRequiredMixin, DeleteView):
     model = Recipe
     success_url = '/recipes/'
     template_name = 'recipes/recipe_confirm_delete.html'
+
+#Create ingredients
+@login_required
+def ingredient_create(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        if name:
+            Ingredient.objects.create(name=name)
+            return redirect('ingredient-list')
+    return render(request, 'main_app/templates/ingredients/ingredient_form.html')
+
+#Get all ingredients
+@login_required
+def ingredient_list(request):
+    ingredients = Ingredient.objects.filter(user=request.user)
+    return render(request, 'main_app/templates/ingredients/ingredient_list.html', {'ingredients': ingredients})
+
+#Update Ingredient
+@login_required
+def ingredient_update(request, pk):
+    ingredient = Ingredient.objects.get(pk=pk)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        if name:
+            ingredient.name = name
+            ingredient.save()
+            return redirect('ingredient-list')
+    return render(request, 'main_app/templates/ingredients/ingredient_form.html', {'ingredient': ingredient})
+
+#Delete Ingredient
+@login_required
+def ingredient_delete(request, pk):
+    ingredient = Ingredient.objects.get(pk=pk)
+    if request.method == 'POST':
+        ingredient.delete()
+        return redirect('ingredient-list')
+    return render(request, 'main_app/templates/ingredients/ingredient_confirm_delete.html', {'ingredient': ingredient})
