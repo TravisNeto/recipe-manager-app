@@ -1,21 +1,29 @@
-{% extends "main_app/base.html" %}
-{% load static %} 
+{% extends 'base.html' %}
+{% load static %}
+
 {% block head %}
-<!-- <link rel="stylesheet" href="{% static 'css/form.css' %}" /> -->
-{% endblock %} 
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+{% endblock %}
+
 {% block content %}
 <div class="page-header">
-  <h1>Sign Up</h1>
+  <h1>Sign Up for Recipe Manager</h1>
+  <img src="{% static 'images/chef-hat.svg' %}" alt="A chef's hat" class="header-image" />
 </div>
+
 {% if error_message %}
-  <p class="red-text">{{ error_message }}</p>
+  <p class="error-message">{{ error_message }}</p>
 {% endif %}
+
 <form action="" method="post" class="form-container" autocomplete="off">
   {% csrf_token %}
-  <table>
+  <table class="form-table">
     {{ form.as_table }}
   </table>
-  <button type="submit" class="btn submit">Submit!</button>
+  <button type="submit" class="btn btn-submit">Sign Up</button>
 </form>
 
+<div class="login-link">
+  <p>Already have an account? <a href="{% url 'home' %}">Log In</a></p>
+</div>
 {% endblock %}
