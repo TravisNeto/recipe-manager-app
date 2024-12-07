@@ -47,10 +47,14 @@ class RecipeList(LoginRequiredMixin, ListView):
     template_name = 'recipes/recipe_list.html'
     context_object_name = 'recipes'
 
+    def get_queryset(self):
+        return Recipe.objects.filter(user=self.request.user) 
+
 #View individual recipe details
 class RecipeDetail(LoginRequiredMixin, DetailView):
     model = Recipe
     template_name = 'recipes/recipe_detail.html'
+    context_object_name = 'recipe'
 
 #Update recipes
 class RecipeUpdate(LoginRequiredMixin, UpdateView):

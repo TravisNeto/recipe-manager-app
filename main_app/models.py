@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 #     created_at = models.DateTimeField(auto_now_add=True)
 #     updated_at = models.DateTimeField(auto_now=True)
 
-
 class Recipe(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -26,28 +25,33 @@ class Ingredient(models.Model):
         return self.name
 
 
-class MeasurementUnit(models.Model):
-    name = models.CharField(max_length=50)
+class MeasurementUnit(models.TextChoices):
+    # Volume Units
+    TEASPOON = 'tsp', 'Teaspoon'
+    TABLESPOON = 'tbsp', 'Tablespoon'
+    FLUID_OUNCE = 'fl oz', 'Fluid Ounce'
+    CUP = 'c', 'Cup'
+    PINT = 'pt', 'Pint'
+    QUART = 'qt', 'Quart'
+    GALLON = 'gal', 'Gallon'
+    MILLILITER = 'ml', 'Milliliter'
+    LITER = 'L', 'Liter'
 
-    def __str__(self):
-        return self.name
-
-
-class MeasurementQty(models.Model):
-    quantity = models.FloatField()
-
-    def __str__(self):
-        return str(self.quantity)
+    # Weight Units
+    OUNCE = 'oz', 'Ounce'
+    POUND = 'lb', 'Pound'
+    GRAM = 'g', 'Gram'
+    KILOGRAM = 'kg', 'Kilogram'
 
 #Links recipes and ingredients with associated quantities and units.
 class RecipeIngredient(models.Model): 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="recipe_ingredients")
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, related_name="recipe_ingredients")
-    measurement_qty = models.ForeignKey(MeasurementQty, on_delete=models.CASCADE, related_name="recipe_ingredients")
-    measurement_unit = models.ForeignKey(MeasurementUnit, on_delete=models.CASCADE, related_name="recipe_ingredients")
+    measurement_unit = models.CharField(max_length=10, choices=MeasurementUnit.choices)
+    measurement_qty = models.PositiveIntegerField(choices=[(i, i) for i in range(1, 1001)])
 
     def __str__(self):
-        return f"{self.measurement_qty.quantity} {self.measurement_unit.name} {self.ingredient.name}"
+        return f"{self.measurement_qty} {self.get_measurement_unit_display()} {self.ingredient.name}"
 
 
 class Step(models.Model):
