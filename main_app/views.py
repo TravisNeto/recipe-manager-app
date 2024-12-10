@@ -15,9 +15,9 @@ from django.http import HttpResponse
 #Auth Views
 #################
 
-# Home view - to do
-class Home(LoginView):
-    template_name = 'main_app/home.html'
+# Login view
+class Login(LoginView):
+    template_name = 'main_app/login.html'
 
 #Sign up
 def signup(request):
@@ -33,6 +33,10 @@ def signup(request):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'signup.html', context)
+
+# Home view
+def home(request):
+    return render(request, 'main_app/home.html')
 
 #################
 #Recipe Views
@@ -65,12 +69,12 @@ class RecipeDetail(LoginRequiredMixin, DetailView):
     template_name = 'recipes/recipe_detail.html'
     context_object_name = 'recipe'
 
-#Update recipes
+#Update recipes - make a view
 class RecipeUpdate(LoginRequiredMixin, UpdateView):
     model = Recipe
     fields = ['title', 'description']
     success_url = '/recipes/'
-    template_name = 'recipes/recipe_form.html'
+    template_name = 'recipes/recipe_update_form.html'
 
 #Delete recipes
 class RecipeDelete(LoginRequiredMixin, DeleteView):
@@ -129,7 +133,7 @@ def step_create(request, recipe_id):
         text = request.POST.get('text')
         step_num = request.POST.get('step_num')
         if text and step_num:
-            Step.objects.create(recipe_id=recipe_id, text=text, step_num=step_num)
+            Step.objects.create(id=recipe_id, text=text, step_num=step_num)
             return redirect('recipe-detail', pk=recipe_id) #circle back
     return render(request, 'steps/steps_form.html')
 
@@ -158,7 +162,7 @@ def step_delete(request, recipe_id):
     if request.method == 'POST':
         step.delete()
         return redirect('recipe-detail', id=step.recipe.id)
-    return render(request, 'steps/step_confirm_delete.html', {'step': step})
+    return render(request, 'steps/step_confirm_delete.html', {'step': step})   
 
 #################
 #Favorites Views

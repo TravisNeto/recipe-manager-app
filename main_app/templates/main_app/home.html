@@ -1,15 +1,7 @@
-{% extends "main_app/base.html" %}
+{% extends 'main_app/base.html' %}
 {% load static %}
 
-<h1>home</h1>
-
-<section>
-    <form action="{% url 'home' %}" method="post" class="login">
-      <h1>Login</h1>
-      {% csrf_token %} {{ form.as_p }}
-      <input type="hidden" name="next" value="{{ next }}" />
-      <button type="submit" class="btn submit">Login</button>
-    </form>
-  </section>
-  
-  {% endblock %}
+{% block content %}
+  <h1>Welcome to the Recipe Manager</h1>
+  <p>Use the links in the navigation bar to explore the app.</p>
+{% endblock %}
