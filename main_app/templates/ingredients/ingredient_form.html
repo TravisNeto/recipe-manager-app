@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% if ingredient %}Update Ingredient{% else %}Add Ingredient{% endif %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label for="id_name">Name:</label>
+        <input type="text" name="name" id="id_name" value="{% if ingredient %}{{ ingredient.name }}{% endif %}" required>
+    </div>
+    <button type="submit">{% if ingredient %}Update{% else %}Add{% endif %}</button>
+</form>
+
+<a href="{% url 'ingredient-list' %}">Back to Ingredients</a>
+{% endblock %}
