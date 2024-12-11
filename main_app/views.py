@@ -46,13 +46,15 @@ def home(request):
 class RecipeCreate(LoginRequiredMixin, CreateView):
     model = Recipe
     fields = ['title', 'description']
-    success_url = '/recipes/'
     template_name = 'recipes/recipe_form.html'
 
     def form_valid(self, form):
         # Associate the currently logged-in user with the recipe
         form.instance.user = self.request.user
-        return super().form_valid(form)
+        self.object = form.save()
+        # Redirect to the ingredient creation page with the recipe ID
+        return redirect('ingredient-create', recipe_id=self.object.id)
+
 
 # View all recipes
 class RecipeList(LoginRequiredMixin, ListView):
@@ -88,13 +90,17 @@ class RecipeDelete(LoginRequiredMixin, DeleteView):
 
 #Create ingredients
 @login_required
-def ingredient_create(request):
+@login_required
+def ingredient_create(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id, user=request.user)  # Ensure recipe belongs to the user
     if request.method == 'POST':
         name = request.POST.get('name')
         if name:
-            Ingredient.objects.create(name=name)
-            return redirect('ingredient-list')
-    return render(request, 'ingredients/ingredient_form.html')
+            Ingredient.objects.create(name=name, user=request.user)
+            # Optionally redirect back to the ingredient creation page to add more
+            return redirect('ingredient-create', recipe_id=recipe.id)
+    return render(request, 'ingredients/ingredient_form.html', {'recipe': recipe})
+
 
 #Get all ingredients
 @login_required
