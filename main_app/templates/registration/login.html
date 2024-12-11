@@ -1,0 +1,23 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+<h1>home</h1>
+
+{% block content %}
+<section>
+  <h1>Login</h1>
+  <form action="{% url 'login' %}" method="post" class="login">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn submit">Login</button>
+  </form>
+  {% if messages %}
+    <ul>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>
+{% endblock %}
