@@ -90,7 +90,6 @@ class RecipeDelete(LoginRequiredMixin, DeleteView):
 
 #Create ingredients
 @login_required
-@login_required
 def ingredient_create(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id, user=request.user)  # Ensure recipe belongs to the user
     if request.method == 'POST':
