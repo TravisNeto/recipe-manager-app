@@ -4,9 +4,10 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Recipe, Ingredient, Step, Favorite
+from .models import Recipe, Ingredient, Step, Favorite, RecipeIngredient, MeasurementUnit
 # Import HttpResponse to send text-based responses
 from django.http import HttpResponse
 
@@ -90,16 +91,39 @@ class RecipeDelete(LoginRequiredMixin, DeleteView):
 
 #Create ingredients
 @login_required
-@login_required
 def ingredient_create(request, recipe_id):
-    recipe = Recipe.objects.get(id=recipe_id, user=request.user)  # Ensure recipe belongs to the user
+    recipe = Recipe.objects.get(id=recipe_id, user=request.user)
+   
+    # Get existing ingredients for the dropdown
+    user_ingredients = Ingredient.objects.filter(user=request.user)
+    context = {
+        'recipe': recipe,
+        'ingredients': user_ingredients,
+        'measurement_units': MeasurementUnit.choices,
+        'measurement_quantities': range(1, 1001)
+    }
+    # Handle new ingredient creation
     if request.method == 'POST':
-        name = request.POST.get('name')
-        if name:
-            Ingredient.objects.create(name=name, user=request.user)
-            # Optionally redirect back to the ingredient creation page to add more
-            return redirect('ingredient-create', recipe_id=recipe.id)
-    return render(request, 'ingredients/ingredient_form.html', {'recipe': recipe})
+        ingredient_name = request.POST.get('ingredient_name')
+        if ingredient_name:
+            ingredient, created = Ingredient.objects.get_or_create(
+                name=ingredient_name.lower().strip(),
+                user=request.user
+            )
+
+        # Create the recipe-ingredient association
+            RecipeIngredient.objects.create(
+                recipe=recipe,
+                ingredient=ingredient,
+                measurement_qty=request.POST.get('measurement_qty'),
+                measurement_unit=request.POST.get('measurement_unit')
+            )
+
+            if 'add_another' in request.POST:
+                return redirect('ingredient-create', recipe_id=recipe.id)
+            return redirect('recipe-detail', pk=recipe.id)
+        
+    return render(request, 'ingredients/ingredient_form.html', context)
 
 
 #Get all ingredients
