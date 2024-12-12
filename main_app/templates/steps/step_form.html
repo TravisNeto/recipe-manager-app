@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+    {% if step %}
+        Edit Step {{ step.step_num }} for {{ recipe.name }}
+    {% else %}
+        Add a New Step for {{ recipe.name }}
+    {% endif %}
+</h1>
+
+<!-- Form for creating or editing a step -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <button type="submit" class="btn btn-primary">
+        {% if step %} Update Step {% else %} Add Step {% endif %}
+    </button>
+</form>
+
+<!-- Link to go back to the step list -->
+<a href="{% url 'step-list' recipe.id %}" class="btn btn-secondary">Back to Steps</a>
+{% endblock %}

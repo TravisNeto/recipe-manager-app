@@ -9,5 +9,34 @@
 <div class="recipe-detail">
   <h1>{{ recipe.title }}</h1>
   <p>{{ recipe.description }}</p>
+
+  <div class="ingredients-section">
+    <h2>Ingredients</h2>
+    {% if recipe.recipe_ingredients.all %}
+      <ul class="ingredients-list">
+        {% for recipe_ingredient in recipe.recipe_ingredients.all %}
+          <li>
+            {{ recipe_ingredient.measurement_qty }} 
+            {{ recipe_ingredient.get_measurement_unit_display }} 
+            {{ recipe_ingredient.ingredient.name }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No ingredients added yet.</p>
+    {% endif %}
+
+    <a href="{% url 'ingredient-create' recipe.id %}" class="btn add-ingredient">Add Ingredient</a>
+  </div>
+
+  <div class="steps-section">
+    <h2>Steps</h2>
+    <p>No steps added yet.</p>
+</div>
+
+<div class="action-buttons">
+  <a href="{% url 'recipe-update' recipe.id %}" class="btn edit">Edit Recipe</a>
+  <a href="{% url 'recipe-delete' recipe.id %}" class="btn delete">Delete Recipe</a>
+  <a href="{% url 'recipe-list' %}" class="btn back">Back to All Recipes</a>
 </div>
 {% endblock %}
