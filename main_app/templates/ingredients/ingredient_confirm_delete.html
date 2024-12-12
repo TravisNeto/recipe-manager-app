@@ -1,1 +1,14 @@
 {% extends 'main_app/base.html' %}
+
+{% block content %}
+<h1>Confirm Delete</h1>
+
+<p>Are you sure you want to delete the ingredient "{{ ingredient.name }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+</form>
+
+<a href="{% url 'ingredient-list' %}">Cancel</a>
+{% endblock %}

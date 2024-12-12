@@ -1,1 +1,31 @@
 {% extends 'main_app/base.html' %}
+
+{% block content %}
+<h1>Your Ingredients</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ingredient in ingredients %}
+        <tr>
+            <td>{{ ingredient.name }}</td>
+            <td>
+                <a href="{% url 'ingredient-update' ingredient.id %}">Edit</a> |
+                <a href="{% url 'ingredient-delete' ingredient.id %}">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2">No ingredients found. <a href="{% url 'ingredient-create' %}">Add one</a>.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'ingredient-create' %}" class="btn">Add Ingredient</a>
+{% endblock %}
