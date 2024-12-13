@@ -1,24 +1,39 @@
-{% extends "base.html" %}
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/recipe-form.css' %}" />
+{% endblock %}
 
 {% block content %}
-<h1>
-    {% if step %}
-        Edit Step {{ step.step_num }} for {{ recipe.name }}
-    {% else %}
-        Add a New Step for {{ recipe.name }}
-    {% endif %}
-</h1>
+<div class="page-header">
+    <h1>
+        {% if step %}
+            Edit Step {{ step.step_num }} for {{ recipe.title }}
+        {% else %}
+            Add Steps for {{ recipe.title }}
+        {% endif %}
+    </h1>
+</div>
 
-<!-- Form for creating or editing a step -->
-<form method="post">
+<form method="post" class="step-form">
     {% csrf_token %}
-    {{ form.as_p }}
-    
-    <button type="submit" class="btn btn-primary">
-        {% if step %} Update Step {% else %} Add Step {% endif %}
-    </button>
+    <div class="form-group">
+        <label for="step_num">Step Number:</label>
+        <input type="number" name="step_num" id="step_num" min="1" required 
+               {% if step %}value="{{ step.step_num }}"{% endif %}>
+    </div>
+
+    <div class="form-group">
+        <label for="text">Instructions:</label>
+        <textarea name="text" id="text" rows="4" required>{% if step %}{{ step.text }}{% endif %}</textarea>
+    </div>
+
+    <div class="button-group">
+        <button type="submit" name="add_another" class="btn submit">Save & Add Another</button>
+        <button type="submit" class="btn submit">Save & Finish</button>
+    </div>
 </form>
 
-<!-- Link to go back to the step list -->
-<a href="{% url 'step-list' recipe.id %}" class="btn btn-secondary">Back to Steps</a>
+<a href="{% url 'recipe-detail' recipe.id %}" class="btn back-btn">Back to Recipe</a>
 {% endblock %}
