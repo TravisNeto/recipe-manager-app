@@ -8,6 +8,7 @@
 {% block content %}
 <div class="recipe-detail">
   <h1>{{ recipe.title }}</h1>
+  <span class="category-badge">{{ recipe.get_category_display }}</span>
   <p>{{ recipe.description }}</p>
 
   <div class="ingredients-section">
@@ -16,9 +17,16 @@
       <ul class="ingredients-list">
         {% for recipe_ingredient in recipe.recipe_ingredients.all %}
           <li>
-            {{ recipe_ingredient.measurement_qty }} 
-            {{ recipe_ingredient.get_measurement_unit_display }} 
-            {{ recipe_ingredient.ingredient.name }}
+            <div class="ingredient-item">
+              <span>
+                {{ recipe_ingredient.measurement_qty }} 
+                {{ recipe_ingredient.get_measurement_unit_display }} 
+                {{ recipe_ingredient.ingredient.name }}
+              </span>
+              <div class="ingredient-actions">
+                <a href="{% url 'ingredient-delete' recipe_ingredient.id %}" class="btn delete">Delete</a>
+              </div>
+            </div>
           </li>
         {% endfor %}
       </ul>
@@ -31,12 +39,31 @@
 
   <div class="steps-section">
     <h2>Steps</h2>
-    <p>No steps added yet.</p>
-</div>
+    {% if recipe.steps.all %}
+      <ol class="steps-list">
+        {% for step in recipe.steps.all %}
+          <li>
+            <div class="step-item">
+              <span>{{ step.text }}</span>
+              <div class="step-actions">
+                <a href="{% url 'step-update' step.id %}" class="btn edit">Edit</a>
+                <a href="{% url 'step-delete' step.id %}" class="btn delete">Delete</a>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p>No steps added yet.</p>
+    {% endif %}
 
-<div class="action-buttons">
-  <a href="{% url 'recipe-update' recipe.id %}" class="btn edit">Edit Recipe</a>
-  <a href="{% url 'recipe-delete' recipe.id %}" class="btn delete">Delete Recipe</a>
-  <a href="{% url 'recipe-list' %}" class="btn back">Back to All Recipes</a>
+    <a href="{% url 'step-create' recipe.id %}" class="btn add-step">Add Step</a>
+  </div>
+
+  <div class="action-buttons">
+    <a href="{% url 'recipe-update' recipe.id %}" class="btn edit">Edit Recipe</a>
+    <a href="{% url 'recipe-delete' recipe.id %}" class="btn delete">Delete Recipe</a>
+    <a href="{% url 'recipe-list' %}" class="btn back">Back to All Recipes</a>
+  </div>
 </div>
 {% endblock %}

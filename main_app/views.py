@@ -47,7 +47,7 @@ def home(request):
 # Create a recipe
 class RecipeCreate(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'category']
     template_name = 'recipes/recipe_form.html'
 
     def form_valid(self, form):
@@ -76,9 +76,14 @@ class RecipeDetail(LoginRequiredMixin, DetailView):
 #Update recipes - make a view
 class RecipeUpdate(LoginRequiredMixin, UpdateView):
     model = Recipe
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'category']
     success_url = '/recipes/'
     template_name = 'recipes/recipe_update_form.html'
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return redirect('recipe-detail', pk=self.object.pk)
+
 
 #Delete recipes
 class RecipeDelete(LoginRequiredMixin, DeleteView):
@@ -94,16 +99,15 @@ class RecipeDelete(LoginRequiredMixin, DeleteView):
 @login_required
 def ingredient_create(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id, user=request.user)
-   
-    # Get existing ingredients for the dropdown
     user_ingredients = Ingredient.objects.filter(user=request.user)
+    
     context = {
         'recipe': recipe,
         'ingredients': user_ingredients,
         'measurement_units': MeasurementUnit.choices,
         'measurement_quantities': range(1, 1001)
     }
-    # Handle new ingredient creation
+    
     if request.method == 'POST':
         ingredient_name = request.POST.get('ingredient_name')
         if ingredient_name:
@@ -112,7 +116,6 @@ def ingredient_create(request, recipe_id):
                 user=request.user
             )
 
-        # Create the recipe-ingredient association
             RecipeIngredient.objects.create(
                 recipe=recipe,
                 ingredient=ingredient,
@@ -122,10 +125,9 @@ def ingredient_create(request, recipe_id):
 
             if 'add_another' in request.POST:
                 return redirect('ingredient-create', recipe_id=recipe.id)
-            return redirect('recipe-detail', pk=recipe.id)
-        
+            return redirect('step-create', recipe_id=recipe.id)  # Redirect to step creation
+    
     return render(request, 'ingredients/ingredient_form.html', context)
-
 
 #Get all ingredients
 @login_required
@@ -148,11 +150,19 @@ def ingredient_update(request, ingredient_id):
 #Delete Ingredient
 @login_required
 def ingredient_delete(request, ingredient_id):
-    ingredient = Ingredient.objects.get(id=ingredient_id)
+    recipe_ingredient = RecipeIngredient.objects.get(id=ingredient_id)
+    
+    # Ensure the user owns this recipe
+    if recipe_ingredient.recipe.user != request.user:
+        return redirect('recipe-list')
+    
     if request.method == 'POST':
-        ingredient.delete()
-        return redirect('ingredient-list')
-    return render(request, 'ingredients/ingredient_confirm_delete.html', {'ingredient': ingredient})
+        recipe_id = recipe_ingredient.recipe.id
+        recipe_ingredient.delete()
+        return redirect('recipe-detail', pk=recipe_id)
+    
+    return render(request, 'ingredients/ingredient_confirm_delete.html', 
+                 {'recipe_ingredient': recipe_ingredient})
 
 #################
 #Step Views
@@ -160,13 +170,32 @@ def ingredient_delete(request, ingredient_id):
 
 #Create a step
 def step_create(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id, user=request.user)
+    
     if request.method == 'POST':
         text = request.POST.get('text')
         step_num = request.POST.get('step_num')
+        
         if text and step_num:
-            Step.objects.create(id=recipe_id, text=text, step_num=step_num)
-            return redirect('recipe-detail', pk=recipe_id) #circle back
-    return render(request, 'steps/steps_form.html')
+            Step.objects.create(
+                recipe=recipe,
+                text=text,
+                step_num=int(step_num)
+            )
+            
+            if 'add_another' in request.POST:
+                return redirect('step-create', recipe_id=recipe.id)
+            return redirect('recipe-detail', pk=recipe.id)
+    
+    # Get the next step number
+    next_step_num = recipe.steps.count() + 1
+    
+    context = {
+        'recipe': recipe,
+        'next_step_num': next_step_num
+    }
+    
+    return render(request, 'steps/step_form.html', context)
 
 #List all steps
 def step_list(request, recipe_id):
@@ -175,25 +204,45 @@ def step_list(request, recipe_id):
     return render(request, 'steps/step_list.html', {'recipe': recipe, 'steps': steps})
 
 #Update a step
-def step_update(request, recipe_id):
-    step = Step.objects.get(id=recipe_id)
+def step_update(request, step_id):
+    step = Step.objects.get(id=step_id)
+    recipe = step.recipe
+    
+    # Ensure the user owns this recipe
+    if recipe.user != request.user:
+        return redirect('recipe-list')
+    
     if request.method == 'POST':
         text = request.POST.get('text')
         step_num = request.POST.get('step_num')
+        
         if text and step_num:
             step.text = text
-            step.step_num = step_num
+            step.step_num = int(step_num)
             step.save()
-            return redirect('recipe-detail', id=step.recipe.id) #circle back
-    return render(request, 'steps/step_form.html', {'step': step})
+            return redirect('recipe-detail', pk=recipe.id)
+    
+    context = {
+        'step': step,
+        'recipe': recipe
+    }
+    
+    return render(request, 'steps/step_form.html', context)
 
 #Delete a step
-def step_delete(request, recipe_id):
-    step = Step.objects.get(id=recipe_id)
+def step_delete(request, step_id):
+    step = Step.objects.get(id=step_id)
+    recipe = step.recipe
+    
+    # Ensure the user owns this recipe
+    if recipe.user != request.user:
+        return redirect('recipe-list')
+    
     if request.method == 'POST':
         step.delete()
-        return redirect('recipe-detail', id=step.recipe.id)
-    return render(request, 'steps/step_confirm_delete.html', {'step': step})   
+        return redirect('recipe-detail', pk=recipe.id)
+    
+    return render(request, 'steps/step_confirm_delete.html', {'step': step}) 
 
 #################
 #Favorites Views
@@ -215,9 +264,9 @@ class FavoriteList(LoginRequiredMixin, ListView):
         return Favorite.objects.filter(user=self.request.user)
 
 #Delete/remove favorites
-def favorite_delete(request, recipe_id):
-    favorite = Favorite.objects.get(id=recipe_id)
+def favorite_delete(request, favorite_id):
+    favorite = Favorite.objects.get(id=favorite_id, user=request.user)
     if request.method == 'POST':
         favorite.delete()
-        return redirect('favorite-list')
-    return render(request, 'favorites/favorite_confirm_delete.html', {'favorite': favorite})
+        return redirect('recipe-list')
+    return render(request, 'main_app/favorite_confirm_delete.html', {'favorite': favorite})

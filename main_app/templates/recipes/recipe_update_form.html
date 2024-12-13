@@ -1,0 +1,23 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/recipe-form.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Update {{ object.title }}</h1>
+</div>
+
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn submit">Update Recipe</button>
+</form>
+
+<div class="action-buttons">
+  <a href="{% url 'recipe-detail' object.id %}" class="btn back-btn">Back to Recipe</a>
+  <a href="{% url 'recipe-list' %}" class="btn back-btn">Back to All Recipes</a>
+</div>
+{% endblock %}
