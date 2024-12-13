@@ -9,7 +9,15 @@
 {% for recipe in recipes %}
 <div>
   <h2>{{ recipe.title }}</h2>
+  <span class="category-badge">{{ recipe.get_category_display }}</span>
   <p><small>{{ recipe.description }}</small></p>
+  <div class="recipe-actions">
+    <a href="{% url 'recipe-detail' recipe.id %}" class="btn view">View Recipe</a>
+    <form method="POST" action="{% url 'favorite-create' recipe.id %}" style="display: inline;">
+      {% csrf_token %}
+      <button type="submit" class="btn favorite">Add to Favorites</button>
+    </form>
+  </div>
 </div>
 {% empty %}
 <p>No recipes found.</p>

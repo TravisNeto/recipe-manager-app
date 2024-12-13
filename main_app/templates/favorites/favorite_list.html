@@ -1,0 +1,42 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="favorites-container">
+    <div class="page-header">
+        <h1>My Favorite Recipes</h1>
+    </div>
+
+    <div class="recipe-grid">
+        {% for favorite in favorites %}
+            <div class="recipe-card">
+                <div class="recipe-card-header">
+                    <h2>{{ favorite.recipe.title }}</h2>
+                    <span class="category-badge">{{ favorite.recipe.get_category_display }}</span>
+                </div>
+                
+                <p class="description">{{ favorite.recipe.description|truncatewords:30 }}</p>
+                
+                <div class="recipe-meta">
+                    <span class="ingredient-count">
+                        {{ favorite.recipe.recipe_ingredients.count }} ingredients
+                    </span>
+                </div>
+
+                <div class="card-actions">
+                    <a href="{% url 'recipe-detail' favorite.recipe.id %}" class="btn view">View Recipe</a>
+                    <form method="post" action="{% url 'favorite-delete' favorite.id %}" class="inline-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn delete">Remove from Favorites</button>
+                    </form>
+                </div>
+            </div>
+        {% empty %}
+            <div class="empty-state">
+                <p>You haven't favorited any recipes yet.</p>
+                <a href="{% url 'recipe-list' %}" class="btn">Browse Recipes</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
