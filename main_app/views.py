@@ -149,11 +149,19 @@ def ingredient_update(request, ingredient_id):
 #Delete Ingredient
 @login_required
 def ingredient_delete(request, ingredient_id):
-    ingredient = Ingredient.objects.get(id=ingredient_id)
+    recipe_ingredient = RecipeIngredient.objects.get(id=ingredient_id)
+    
+    # Ensure the user owns this recipe
+    if recipe_ingredient.recipe.user != request.user:
+        return redirect('recipe-list')
+    
     if request.method == 'POST':
-        ingredient.delete()
-        return redirect('ingredient-list')
-    return render(request, 'ingredients/ingredient_confirm_delete.html', {'ingredient': ingredient})
+        recipe_id = recipe_ingredient.recipe.id
+        recipe_ingredient.delete()
+        return redirect('recipe-detail', pk=recipe_id)
+    
+    return render(request, 'ingredients/ingredient_confirm_delete.html', 
+                 {'recipe_ingredient': recipe_ingredient})
 
 #################
 #Step Views
