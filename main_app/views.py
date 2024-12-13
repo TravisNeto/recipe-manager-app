@@ -255,9 +255,9 @@ class FavoriteList(LoginRequiredMixin, ListView):
         return Favorite.objects.filter(user=self.request.user)
 
 #Delete/remove favorites
-def favorite_delete(request, recipe_id):
-    favorite = Favorite.objects.get(id=recipe_id)
+def favorite_delete(request, favorite_id):
+    favorite = Favorite.objects.get(id=favorite_id, user=request.user)
     if request.method == 'POST':
         favorite.delete()
-        return redirect('favorite-list')
-    return render(request, 'favorites/favorite_confirm_delete.html', {'favorite': favorite})
+        return redirect('recipe-list')
+    return render(request, 'main_app/favorite_confirm_delete.html', {'favorite': favorite})

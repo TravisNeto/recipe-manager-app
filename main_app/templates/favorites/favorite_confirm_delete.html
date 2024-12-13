@@ -1,0 +1,18 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="delete-confirmation">
+    <h1>Remove from Favorites</h1>
+    
+    <p>Are you sure you want to remove "{{ favorite.recipe.title }}" from your favorites?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="button-group">
+            <button type="submit" class="btn delete">Remove</button>
+            <a href="{% url 'recipe-list' %}" class="btn cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
