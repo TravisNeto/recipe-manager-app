@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.views import LoginView
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
@@ -19,6 +19,7 @@ from django.http import HttpResponse
 # Login view
 class Login(LoginView):
     template_name = 'main_app/login.html'
+
 
 #Sign up
 def signup(request):
