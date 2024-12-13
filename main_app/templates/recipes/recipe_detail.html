@@ -8,6 +8,7 @@
 {% block content %}
 <div class="recipe-detail">
   <h1>{{ recipe.title }}</h1>
+  <span class="category-badge">{{ recipe.get_category_display }}</span>
   <p>{{ recipe.description }}</p>
 
   <div class="ingredients-section">
@@ -29,14 +30,12 @@
     <a href="{% url 'ingredient-create' recipe.id %}" class="btn add-ingredient">Add Ingredient</a>
   </div>
 
-  <div class="steps-section">
-    <h2>Steps</h2>
-    <p>No steps added yet.</p>
-</div>
-
-<div class="action-buttons">
-  <a href="{% url 'recipe-update' recipe.id %}" class="btn edit">Edit Recipe</a>
-  <a href="{% url 'recipe-delete' recipe.id %}" class="btn delete">Delete Recipe</a>
-  <a href="{% url 'recipe-list' %}" class="btn back">Back to All Recipes</a>
+  <div class="action-buttons">
+    <a href="{% url 'recipe-update' recipe.id %}" class="btn edit">Edit Recipe</a>
+    <a href="{% url 'recipe-delete' recipe.id %}" class="btn delete">Delete Recipe</a>
+    <a href="{% url 'recipe-list' %}" class="btn back">Back to All Recipes</a>
+  </div>
 </div>
 {% endblock %}
+
+Version 2 of 2

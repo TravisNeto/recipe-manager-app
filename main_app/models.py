@@ -8,12 +8,25 @@ from django.contrib.auth.models import User
 #     updated_at = models.DateTimeField(auto_now=True)
 
 class Recipe(models.Model):
+    APPETIZER = 'appetizer'
+    ENTREE = 'entree'
+    DESSERT = 'dessert'
+    
+    CATEGORY_CHOICES = [
+        (APPETIZER, 'Appetizer'),
+        (ENTREE, 'Entree'),
+        (DESSERT, 'Dessert'),
+    ]
     title = models.CharField(max_length=255)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="recipes")
-
+    category = models.CharField(
+        max_length=50,
+        choices=CATEGORY_CHOICES,
+        default='entree'
+    )
     def __str__(self):
         return self.title
 
@@ -74,16 +87,3 @@ class Favorite(models.Model):
     def __str__(self):
         return f"{self.recipe.title}"
 
-
-class Category(models.Model):
-    CATEGORY_CHOICES = [
-        ('appetizer', 'Appetizer'),
-        ('entree', 'Entree'),
-        ('dessert', 'Dessert'),
-    ]
-
-    type = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="categories")
-
-    def __str__(self):
-        return f"{self.type}"

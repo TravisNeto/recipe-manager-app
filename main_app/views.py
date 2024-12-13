@@ -46,7 +46,7 @@ def home(request):
 # Create a recipe
 class RecipeCreate(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'category']
     template_name = 'recipes/recipe_form.html'
 
     def form_valid(self, form):
@@ -75,9 +75,14 @@ class RecipeDetail(LoginRequiredMixin, DetailView):
 #Update recipes - make a view
 class RecipeUpdate(LoginRequiredMixin, UpdateView):
     model = Recipe
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'category']
     success_url = '/recipes/'
     template_name = 'recipes/recipe_update_form.html'
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return redirect('recipe-detail', pk=self.object.pk)
+
 
 #Delete recipes
 class RecipeDelete(LoginRequiredMixin, DeleteView):
