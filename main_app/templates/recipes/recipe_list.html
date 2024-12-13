@@ -6,12 +6,34 @@
 {% endblock %}
 
 {% block content %}
-{% for recipe in recipes %}
-<div>
-  <h2>{{ recipe.title }}</h2>
-  <p><small>{{ recipe.description }}</small></p>
+<div class="page-header">
+  <h1>My Recipes</h1>
+  <a href="{% url 'recipe-create' %}" class="btn create">Create New Recipe</a>
 </div>
-{% empty %}
-<p>No recipes found.</p>
-{% endfor %}
+
+<div class="recipe-grid">
+  {% for recipe in recipes %}
+  <div class="recipe-card">
+    <h2>{{ recipe.title }}</h2>
+    <p class="description">{{ recipe.description|truncatewords:30 }}</p>
+    <div class="recipe-meta">
+      <span class="date">Created: {{ recipe.created_at|date:"M d, Y" }}</span>
+      <span class="ingredients-count">
+        {{ recipe.recipe_ingredients.count }} ingredients
+      </span>
+    </div>
+    <div class="card-actions">
+      <a href="{% url 'recipe-detail' recipe.id %}" class="btn view">View Recipe</a>
+      <a href="{% url 'favorite-create' recipe.id %}" class="btn favorite">
+        Add to Favorites
+      </a>
+    </div>
+  </div>
+  {% empty %}
+  <div class="empty-state">
+    <p>No recipes found.</p>
+    <a href="{% url 'recipe-create' %}" class="btn create">Create Your First Recipe</a>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
