@@ -19,12 +19,16 @@
             </div>
             <div class="recipe-actions">
                 <a href="{% url 'recipe-detail' recipe.id %}" class="btn view">View Recipe</a>
+                {% if not recipe.favorites.all %}
                 <form method="POST" action="{% url 'favorite-create' recipe.id %}" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn favorite">Add to Favorites</button>
                 </form>
+                {% endif %}
             </div>
+            {% if recipe.favorites.all %}
             <div class="favorite-icon">♥</div>
+            {% endif %}
         </div>
         {% empty %}
         <div class="empty-state">

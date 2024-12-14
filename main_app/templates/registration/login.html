@@ -4,21 +4,23 @@
 <h1>home</h1>
 
 {% block content %}
-<section>
-  <h1>Login</h1>
-  <form action="{% url 'login' %}" method="post" class="login">
+<div class="form-container">
+  <h1 class="form-header">Login</h1>
+
+  <form action="" method="post" autocomplete="off">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="hidden" name="next" value="{{ next }}">
-    <button type="submit" class="btn submit">Login</button>
+    <div class="form-group">
+      <label for="id_username" class="form-label">Username:</label>
+      <input type="text" name="username" id="id_username" class="form-input" required />
+
+      <label for="id_password" class="form-label">Password:</label>
+      <input type="password" name="password" id="id_password" class="form-input" required />
+    </div>
+
+    <div class="button">
+      <button type="submit" class="btn btn-submit">Login</button>
+    </div>
   </form>
-  {% if messages %}
-    <ul>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-</section>
+</div>
 {% endblock %}
 

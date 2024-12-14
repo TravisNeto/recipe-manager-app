@@ -26,34 +26,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* Filter Section */
-.filter-section {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 20px;
-  gap: 10px;
-}
-
-.filter-section select,
-.filter-section button {
-  padding: 10px 15px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.filter-section button {
-  background-color: #4a90e2;
-  color: #fff;
-  border: none;
-  transition: background-color 0.2s ease;
-}
-
-.filter-section button:hover {
-  background-color: #357ab7;
-}
-
 /* Recipe Grid Layout */
 .recipe-grid {
   display: grid;
@@ -81,6 +53,7 @@ body {
 /* Recipe Card Content */
 .recipe-card-content {
   flex-grow: 1;
+  text-align: center;
 }
 
 .recipe-card-title {
@@ -103,13 +76,22 @@ body {
 .recipe-card-content p {
   font-size: 14px;
   color: #555;
+  margin-bottom: 20px;
+}
+
+/* Recipe Meta (Ingredient Count) */
+.recipe-meta {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 15px;
 }
 
 /* Recipe Actions */
 .recipe-actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .btn {
@@ -131,11 +113,11 @@ body {
   background-color: #357ab7;
 }
 
-.btn.favorite {
+.btn.delete {
   background-color: #ff6b6b;
 }
 
-.btn.favorite:hover {
+.btn.delete:hover {
   background-color: #e55353;
 }
 
@@ -154,6 +136,20 @@ body {
   text-align: center;
   font-size: 18px;
   color: #777;
+}
+
+.empty-state a.btn {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: #4a90e2;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.empty-state a.btn:hover {
+  background-color: #357ab7;
 }
 
 /* Responsive Design for Smaller Screens */
