@@ -9,14 +9,6 @@
 <div class="container">
     <h1 class="page-title">All Recipes</h1>
 
-    <div class="filter-section">
-        <select>
-            <option>Category</option>
-            <!-- Add your category options here -->
-        </select>
-        <button>Favorites</button>
-    </div>
-
     <div class="recipe-grid">
         {% for recipe in recipes %}
         <div class="recipe-card">
@@ -27,12 +19,16 @@
             </div>
             <div class="recipe-actions">
                 <a href="{% url 'recipe-detail' recipe.id %}" class="btn view">View Recipe</a>
+                {% if not recipe.favorites.all %}
                 <form method="POST" action="{% url 'favorite-create' recipe.id %}" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn favorite">Add to Favorites</button>
                 </form>
+                {% endif %}
             </div>
+            {% if recipe.favorites.all %}
             <div class="favorite-icon">♥</div>
+            {% endif %}
         </div>
         {% empty %}
         <div class="empty-state">

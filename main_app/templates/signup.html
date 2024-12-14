@@ -2,28 +2,33 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+<link rel="stylesheet" href="{% static 'css/recipe.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
+<div class="form-container">
   <h1>Sign Up for Recipe Manager</h1>
-  <img src="{% static 'images/chef-hat.svg' %}" alt="A chef's hat" class="header-image" />
-</div>
 
-{% if error_message %}
-  <p class="error-message">{{ error_message }}</p>
-{% endif %}
+  {% if error_message %}
+    <p class="error-message">{{ error_message }}</p>
+  {% endif %}
 
-<form action="" method="post" class="form-container" autocomplete="off">
-  {% csrf_token %}
-  <table class="form-table">
-    {{ form.as_table }}
-  </table>
-  <button type="submit" class="btn btn-submit">Sign Up</button>
-</form>
+  <form action="" method="post" autocomplete="off">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_username" class="form-label">Username:</label>
+      <input type="text" name="username" id="id_username" class="form-input" required />
 
-<div class="login-link">
-  <p>Already have an account? <a href="{% url 'home' %}">Log In</a></p>
-</div>
+      <label for="id_password1" class="form-label">Password:</label>
+      <input type="password" name="password1" id="id_password1" class="form-input" required />
+
+      <label for="id_password2" class="form-label">Password Confirmation:</label>
+      <input type="password" name="password2" id="id_password2" class="form-input" required />
+    </div>
+
+    <div class="button">
+      <button type="submit" class="btn btn-submit">Sign Up</button>
+    </div>
+  </form>
+
 {% endblock %}

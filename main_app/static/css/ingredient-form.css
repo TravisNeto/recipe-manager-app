@@ -1,0 +1,21 @@
+/* Ingredient Form Specific Styles */
+.form-container h1 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.button {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn {
+  margin: 5px;
+}

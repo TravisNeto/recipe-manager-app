@@ -1,0 +1,156 @@
+/* General Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  
+  /* Header Styling */
+  header {
+    background-color: #4a90e2;
+    padding: 10px 0;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Navigation Bar Styling */
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+  
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-radius: 4px;
+  }
+  
+  nav ul li a:hover {
+    background-color: #357ab7;
+    color: #e0e0e0;
+  }
+  
+  nav ul li a.active {
+    background-color: #357ab7;
+  }
+  
+  /* Main Content Styling */
+  main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Common Form Styles */
+  .form-container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Common Button Styles */
+  .btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  
+  .btn-primary {
+    background-color: #4a90e2;
+    color: #fff;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #357ab7;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  
+  .btn-link {
+    font-size: 16px;
+    color: #4a90e2;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    transition: color 0.2s ease;
+  }
+  
+  .btn-link:hover {
+    color: #357ab7;
+    text-decoration: underline;
+  }
+  
+  /* Common Input Styles */
+  .form-input,
+  .form-select,
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.2s ease;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    nav ul {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    nav ul li {
+      margin: 10px 0;
+    }
+  
+    .form-container {
+      padding: 20px;
+      margin: 40px 10px;
+    }
+  
+    .btn {
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+  }

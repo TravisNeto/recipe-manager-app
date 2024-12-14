@@ -1,5 +1,5 @@
-/* Recipe Form Specific Styles */
-.form-header h1 {
+/* Step Form Specific Styles */
+.form-header {
   font-size: 28px;
   font-weight: 600;
   margin-bottom: 20px;
@@ -12,13 +12,8 @@
   margin-top: 20px;
 }
 
-.link-group {
-  text-align: center;
-  margin-top: 20px;
-}
-
 @media (max-width: 768px) {
-  .form-header h1 {
+  .form-header {
     font-size: 24px;
   }
 }
