@@ -1,4 +1,3 @@
-/* General Page Styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
@@ -8,7 +7,6 @@ body {
     line-height: 1.6;
   }
   
-  /* Recipe Detail Container */
   .recipe-detail {
     max-width: 800px;
     margin: 40px auto;
@@ -18,7 +16,6 @@ body {
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
   }
   
-  /* Recipe Title */
   .recipe-detail h1 {
     font-size: 32px;
     font-weight: bold;
@@ -27,7 +24,6 @@ body {
     color: #222;
   }
   
-  /* Category Badge */
   .category-badge {
     display: block;
     width: fit-content;
@@ -39,7 +35,6 @@ body {
     border-radius: 12px;
   }
   
-  /* Description */
   .recipe-detail p {
     font-size: 16px;
     margin-bottom: 30px;
@@ -47,7 +42,6 @@ body {
     color: #555;
   }
   
-  /* Section Headers */
   .ingredients-section h2,
   .steps-section h2 {
     font-size: 24px;
@@ -57,7 +51,6 @@ body {
     color: #4a90e2;
   }
   
-  /* Ingredients List */
   .ingredients-list {
     list-style: none;
     padding: 0;
@@ -71,7 +64,6 @@ body {
     border-bottom: 1px solid #e0e0e0;
   }
   
-  /* Steps List */
   .steps-list {
     list-style: decimal;
     padding-left: 20px;
@@ -85,7 +77,6 @@ body {
     border-bottom: 1px solid #e0e0e0;
   }
   
-  /* Buttons */
   .btn {
     padding: 10px 15px;
     font-size: 14px;
@@ -134,7 +125,6 @@ body {
     background-color: #5a6268;
   }
   
-  /* Action Buttons Container */
   .action-buttons {
     text-align: center;
     margin-top: 30px;
@@ -144,14 +134,12 @@ body {
     margin: 5px;
   }
   
-  /* Ingredient and Step Actions */
   .ingredient-actions,
   .step-actions {
     display: flex;
     gap: 10px;
   }
   
-  /* Responsive Design */
   @media (max-width: 768px) {
     .recipe-detail {
       padding: 20px;
