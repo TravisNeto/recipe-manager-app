@@ -8,8 +8,6 @@ from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Recipe, Ingredient, Step, Favorite, RecipeIngredient, MeasurementUnit
-# Import HttpResponse to send text-based responses
-from django.http import HttpResponse
 
 
 #################
@@ -20,6 +18,7 @@ from django.http import HttpResponse
 class Login(LoginView):
     template_name = 'main_app/login.html'
 
+# Logout view
 def logout_view(request):
     logout(request)
     return redirect('login')
@@ -105,12 +104,17 @@ def ingredient_create(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id, user=request.user)
     user_ingredients = Ingredient.objects.filter(user=request.user)
     
+    # Get current quantity from POST or default to 1
+    measurement_qty = int(request.POST.get('measurement_qty', 1))
+    
     context = {
         'recipe': recipe,
         'ingredients': user_ingredients,
         'measurement_units': MeasurementUnit.choices,
-        'measurement_quantities': range(1, 1001)
+        'measurement_quantities': range(1, 1001),
+        'measurement_qty': measurement_qty  # Add this line
     }
+    # Rest of the view remains the same
     
     if request.method == 'POST':
         ingredient_name = request.POST.get('ingredient_name')

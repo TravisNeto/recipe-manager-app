@@ -1,11 +1,5 @@
 from django.db import models
-from django.urls import reverse
-from datetime import date
 from django.contrib.auth.models import User
-
-# class User(User):
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
 
 class Recipe(models.Model):
     APPETIZER = 'appetizer'
@@ -64,8 +58,9 @@ class RecipeIngredient(models.Model):
     measurement_unit = models.CharField(max_length=10, choices=MeasurementUnit.choices)
     measurement_qty = models.PositiveIntegerField(choices=[(i, i) for i in range(1, 1001)])
 
-    def __str__(self):
-        return f"{self.measurement_qty} {self.get_measurement_unit_display()} {self.ingredient.name}"
+def __str__(self):
+    unit = self.get_measurement_unit_display()
+    return f"{self.measurement_qty} {unit}{'s' if self.measurement_qty > 1 else ''} {self.ingredient.name}"
 
 
 class Step(models.Model):
@@ -86,4 +81,3 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f"{self.recipe.title}"
-

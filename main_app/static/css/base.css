@@ -81,7 +81,19 @@ body {
     border-radius: 4px;
     cursor: pointer;
     text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;  /* Change to inline-flex */
+    align-items: center;   /* Add this */
+    justify-content: center; /* Add this */
+    min-width: 120px;
+    height: 44px;          /* Add fixed height */
+    line-height: 1;        /* Add this */
+    text-align: center;
+    margin: 5px;
+    white-space: nowrap;
+    box-sizing: border-box;
   }
+  
   
   .btn-primary {
     background-color: #4a90e2;
@@ -107,9 +119,12 @@ body {
     font-size: 16px;
     color: #4a90e2;
     text-decoration: none;
-    display: block;
-    text-align: center;
-    margin-top: 20px;
+    display: inline-flex;    /* Change to inline-flex */
+    align-items: center;     /* Add this */
+    justify-content: center; /* Add this */
+    height: 44px;           /* Match btn height */
+    min-width: 120px;       /* Match btn width */
+    margin: 5px;
     transition: color 0.2s ease;
   }
   
@@ -151,6 +166,13 @@ body {
   
     .btn {
       padding: 10px 16px;
+      font-size: 14px;
+      min-width: 100px;
+      height: 38px;  
+    }
+    .btn-link {
+      height: 38px;          /* Match mobile btn height */
+      min-width: 100px;      /* Match mobile btn width */
       font-size: 14px;
     }
   }
