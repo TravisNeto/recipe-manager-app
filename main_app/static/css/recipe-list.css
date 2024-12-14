@@ -1,3 +1,4 @@
+/* General Page Styling */
 body {
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
@@ -7,6 +8,7 @@ body {
   line-height: 1.6;
 }
 
+/* Container Styling */
 .container {
   max-width: 1200px;
   margin: 40px auto;
@@ -16,6 +18,7 @@ body {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
 }
 
+/* Page Title */
 .page-title {
   font-size: 32px;
   font-weight: bold;
@@ -23,6 +26,7 @@ body {
   margin-bottom: 20px;
 }
 
+/* Filter Section */
 .filter-section {
   display: flex;
   justify-content: flex-end;
@@ -50,12 +54,14 @@ body {
   background-color: #357ab7;
 }
 
+/* Recipe Grid Layout */
 .recipe-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
+/* Recipe Card Styling */
 .recipe-card {
   background-color: #fff;
   padding: 20px;
@@ -72,6 +78,7 @@ body {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Recipe Card Content */
 .recipe-card-content {
   flex-grow: 1;
 }
@@ -92,11 +99,13 @@ body {
   margin-bottom: 10px;
 }
 
+/* Recipe Description */
 .recipe-card-content p {
   font-size: 14px;
   color: #555;
 }
 
+/* Recipe Actions */
 .recipe-actions {
   display: flex;
   justify-content: space-between;
@@ -130,6 +139,7 @@ body {
   background-color: #e55353;
 }
 
+/* Heart Icon for Favorites */
 .favorite-icon {
   font-size: 24px;
   color: #ff6b6b;
@@ -138,6 +148,7 @@ body {
   right: 10px;
 }
 
+/* Empty State Styling */
 .empty-state {
   grid-column: span 2;
   text-align: center;
@@ -145,6 +156,7 @@ body {
   color: #777;
 }
 
+/* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
   .recipe-grid {
     grid-template-columns: 1fr;
