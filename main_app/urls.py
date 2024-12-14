@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     #Home and Auth
     path('login/', views.Login.as_view(), name='login'),
+    path('accounts/logout/', views.logout_view, name='logout'),
     path('signup/', views.signup, name='signup'),
     path('', views.home, name='home'),
     
@@ -34,3 +35,4 @@ urlpatterns = [
     path('recipes/<int:recipe_id>/favorite/', views.favorite_create, name='favorite-create'),
     path('favorites/<int:favorite_id>/delete/', views.favorite_delete, name='favorite-delete'),
 ]
+
