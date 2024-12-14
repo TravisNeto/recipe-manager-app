@@ -6,18 +6,23 @@
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
+<div class="form-container">
+  <div class="form-header">
   <h1>Update {{ object.title }}</h1>
 </div>
 
-<form action="" method="post">
+<form action="" method="post" class="form">
   {% csrf_token %}
+  <div class="form-group">
   {{ form.as_p }}
+  <div class="button-group">
   <button type="submit" class="btn submit">Update Recipe</button>
+  </div>
 </form>
 
-<div class="action-buttons">
-  <a href="{% url 'recipe-detail' object.id %}" class="btn back-btn">Back to Recipe</a>
-  <a href="{% url 'recipe-list' %}" class="btn back-btn">Back to All Recipes</a>
+<div class="link-group">
+  <a href="{% url 'recipe-detail' object.id %}" class="btn btn-link">Back to Recipe</a>
+  <a href="{% url 'recipe-list' %}" class="btn btn-link">Back to All Recipes</a>
+</div>
 </div>
 {% endblock %}
