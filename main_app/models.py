@@ -1,11 +1,5 @@
 from django.db import models
-from django.urls import reverse
-from datetime import date
 from django.contrib.auth.models import User
-
-# class User(User):
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
 
 class Recipe(models.Model):
     APPETIZER = 'appetizer'
