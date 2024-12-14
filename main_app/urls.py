@@ -35,3 +35,4 @@ urlpatterns = [
     path('recipes/<int:recipe_id>/favorite/', views.favorite_create, name='favorite-create'),
     path('favorites/<int:favorite_id>/delete/', views.favorite_delete, name='favorite-delete'),
 ]
+
