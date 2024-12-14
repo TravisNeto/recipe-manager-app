@@ -40,10 +40,10 @@
     <label for="measurement_unit" class="form-label">Unit:</label>
     <select name="measurement_unit" id="measurement_unit" required class="form-select">
       {% for value, label in measurement_units %}
-      <option value="{{ value }}">{{ label }}</option>
+      <option value="{{ value }}">{{ label }}{% if measurement_qty > 1 %}s{% endif %}</option>
       {% endfor %}
     </select>
-  </div>
+</div>
 
   <div class="button group">
     <button type="submit" name="add_another" class="btn btn-primary">

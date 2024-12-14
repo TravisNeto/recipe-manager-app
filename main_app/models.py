@@ -34,6 +34,7 @@ class Ingredient(models.Model):
 
 
 class MeasurementUnit(models.TextChoices):
+    # Volume Units
     TEASPOON = 'tsp', 'Teaspoon'
     TABLESPOON = 'tbsp', 'Tablespoon'
     FLUID_OUNCE = 'fl oz', 'Fluid Ounce'
@@ -44,19 +45,22 @@ class MeasurementUnit(models.TextChoices):
     MILLILITER = 'ml', 'Milliliter'
     LITER = 'L', 'Liter'
 
+    # Weight Units
     OUNCE = 'oz', 'Ounce'
     POUND = 'lb', 'Pound'
     GRAM = 'g', 'Gram'
     KILOGRAM = 'kg', 'Kilogram'
 
+#Links recipes and ingredients with associated quantities and units.
 class RecipeIngredient(models.Model): 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="recipe_ingredients")
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, related_name="recipe_ingredients")
     measurement_unit = models.CharField(max_length=10, choices=MeasurementUnit.choices)
     measurement_qty = models.PositiveIntegerField(choices=[(i, i) for i in range(1, 1001)])
 
-    def __str__(self):
-        return f"{self.measurement_qty} {self.get_measurement_unit_display()} {self.ingredient.name}"
+def __str__(self):
+    unit = self.get_measurement_unit_display()
+    return f"{self.measurement_qty} {unit}{'s' if self.measurement_qty > 1 else ''} {self.ingredient.name}"
 
 
 class Step(models.Model):
@@ -77,4 +81,3 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f"{self.recipe.title}"
-

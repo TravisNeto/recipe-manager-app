@@ -20,7 +20,7 @@
             <div class="ingredient-item">
               <span>
                 {{ recipe_ingredient.measurement_qty }} 
-                {{ recipe_ingredient.get_measurement_unit_display }} 
+                {{ recipe_ingredient.get_measurement_unit_display }}{% if recipe_ingredient.measurement_qty > 1 %}s{% endif %}
                 {{ recipe_ingredient.ingredient.name }}
               </span>
               <div class="ingredient-actions">
