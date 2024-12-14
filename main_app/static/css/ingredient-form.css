@@ -1,93 +1,21 @@
-/* General Page Styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Form Container Styling */
-  .form-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  }
-  
-  /* Header Styling */
-  .form-container h1 {
-    font-size: 26px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  /* Form Group Styling */
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  /* Label Styling */
-  .form-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  
-  /* Input, Select, and Datalist Styling */
-  .form-input,
-  .form-select {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  /* Button Group Styling */
-  .button {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .btn {
-    padding: 10px 20px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 5px;
-  }
-  
-  .btn-primary {
-    background-color: #4a90e2;
-    color: #fff;
-  }
-  
-  .btn-primary:hover {
-    background-color: #357ab7;
-  }
-  
-  .btn-secondary {
-    background-color: #6c757d;
-    color: #fff;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #5a6268;
-  }
-  
-  .btn-link {
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-    color: #4a90e2;
-    text-decoration: none;
-  }
-  
-  .btn-link:hover {
-    text-decoration: underline;
-  }
-  
+/* Ingredient Form Specific Styles */
+.form-container h1 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.button {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn {
+  margin: 5px;
+}
