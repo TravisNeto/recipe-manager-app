@@ -20,6 +20,10 @@ from django.http import HttpResponse
 class Login(LoginView):
     template_name = 'main_app/login.html'
 
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
 
 #Sign up
 def signup(request):
