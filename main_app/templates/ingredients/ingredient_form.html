@@ -1,17 +1,25 @@
-{% extends 'main_app/base.html' %} {% block content %}
+{% extends 'main_app/base.html' %}
+{% load static %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/ingredient-form.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
 <h1>Add Ingredients for {{ recipe.title }}</h1>
 
-<form method="post">
+<form method="post" class="form">
   {% csrf_token %}
   <div class="form-group">
-    <label for="ingredient_name">Ingredient Name:</label>
+    <label for="ingredient_name" class="form-label">Ingredient Name:</label>
     <input
       type="text"
       name="ingredient_name"
       id="ingredient_name"
       list="ingredients"
       required
+      class="form-input"
     />
     <datalist id="ingredients">
       {% for ingredient in ingredients %}
@@ -20,8 +28,8 @@
   </div>
 
   <div class="form-group">
-    <label for="measurement_qty">Quantity:</label>
-    <select name="measurement_qty" id="measurement_qty" required>
+    <label for="measurement_qty" class="form-label">Quantity:</label>
+    <select name="measurement_qty" id="measurement_qty" required class="form-select">
       {% for qty in measurement_quantities %}
       <option value="{{ qty }}">{{ qty }}</option>
       {% endfor %}
@@ -29,8 +37,8 @@
   </div>
 
   <div class="form-group">
-    <label for="measurement_unit">Unit:</label>
-    <select name="measurement_unit" id="measurement_unit" required>
+    <label for="measurement_unit" class="form-label">Unit:</label>
+    <select name="measurement_unit" id="measurement_unit" required class="form-select">
       {% for value, label in measurement_units %}
       <option value="{{ value }}">{{ label }}</option>
       {% endfor %}
@@ -38,12 +46,13 @@
   </div>
 
   <div class="button group">
-    <button type="submit" name="add_another" class="btn submit">
+    <button type="submit" name="add_another" class="btn btn-primary">
       Save & Add Another
     </button>
-    <button type="submit" class="btn submit">Save & Finish</button>
+    <button type="submit" class="btn btn-secondary">Save & Finish</button>
   </div>
 </form>
 
-<p><a href="{% url 'recipe-detail' pk=recipe.id %}" class="btn back-btn">Back to Recipe</a></p>
+<a href="{% url 'recipe-detail' pk=recipe.id %}" class="btn btn-link">Back to Recipe</a>
+</div>
 {% endblock %}
